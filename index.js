@@ -20,14 +20,14 @@ bot.listen('/', process.env.PORT, () => {
 bot.on('message', async event => {
   if (event.message.type === 'text') {
     try {
-      const response = await axios.get('https://datacenter.taichung.gov.tw/swagger/OpenData/f116d1db-56f7-4984-bad8-c82e383765c0')
+      const response = await axios.get('https://cloud.culture.tw/frontsite/trans/SearchPerformPlaceAction.do?method=doFindPerformPlaceTypeJ')
       const data = response.data.filter(data => {
-        return data['花種'] === event.message.text
+        return data['placeName'] === event.message.text
       })
 
       let reply = ''
       for (const d of data) {
-        reply += `地點:${d['地點']} \n地址:${['地址']} \n觀賞時期:${d['觀賞時期']}\n\n`
+        reply += `地址:${d['address']} \n管理單位:${['managerUnit']} \n聯絡電話:${d['officePhone']} \n電子信箱:${['email']} \n登記制度:${['register']} \n\n`
       }
       event.reply(reply)
     } catch (error) {
